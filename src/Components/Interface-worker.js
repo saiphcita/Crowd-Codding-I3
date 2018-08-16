@@ -107,17 +107,6 @@ class PostAndCategory extends Component {
     var refUserCategory = dbUser.ref("Users/"+this.props.numberUser+"/User/PostAndCategory/Category");
     refUserPost.on("value", (snapshot) => {
       let posts = snapshot.val();
-      for(var i=0; i < posts.length; i++){
-        if(Number(posts[i].category ) === 0){
-          this.setState({satateForStatics : false})
-          this.setState({widthPost: "980px", wordsPost: 120}) 
-          
-          break
-        }else{
-          this.setState({satateForStatics : true})
-          this.setState({widthPost : "600px", wordsPost: 64})
-        }
-      }
       this.setState({post : posts})
       this.setState({value: posts.map(val => {return val.category})})
     });
@@ -135,93 +124,34 @@ class PostAndCategory extends Component {
   }
 
   render() {
-    //This is for Show Statistics
-    var staticsSection;
-
-    if(this.state.satateForStatics){
-      staticsSection = <ul className="listStatistics">
-      <li className="tittleListPC">Statistics of each Post</li>
-        {this.state.post.map((val, indexPost) => {
-        let ArrayValores = this.state.PostOfUser.map(val => parseInt(val[indexPost].category, 10));
-        var Postvalores = [];
-        for (let i = 0; i < ArrayValores.length; i++) {
-          if(ArrayValores[i] > 0){
-            Postvalores.push(ArrayValores[i])
-          }
-        }
-        let TotalValores = Postvalores.length
-        var percentage = {};
-        for (let i = 0; i < TotalValores; i++) {
-          percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1;
-        }
-        for (let key in percentage) {
-          percentage[key] = Math.round(((percentage[key]/TotalValores)*100)*10) / 10;
-        }
-        // THIS IS THE RESULT
-        if (Postvalores.length === 0) {
-          return <li className="LIstatistics" key={indexPost}>
-                    <div className="noUserSelected">No one has selected in this Post</div>
-                  </li>
-        }else {
-          return <li className="LIstatistics" key={indexPost}>
-            <div className="StyleStatistics">
-              {
-                Object.keys(percentage).map((key, index) => {
-                  if(percentage[key] === 100){
-                    return <div key={index} className="DivStatistics"
-                    style={{width: "100%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
-                      <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
-                  </div> 
-                  }else if(percentage[key] >= 50){
-                    return <div key={index} className="DivStatistics"
-                    style={{width: percentage[key]+"%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
-                      <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
-                  </div> 
-                  }else{
-                    return <div key={index} className="DivStatistics"
-                    style={{width: percentage[key]+"%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
-                      <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
-                  </div>
-                  }      
-                })
-              }  
-            </div>
-          </li> 
-          }
-        })}
-      </ul>;
-    }else{
-      staticsSection= <div/>
-    }
-    
     return (
       <div>
         {/* SECCION DE LA CATEGORIA Y LOS POST*/}
         <div className="DivPostCategory">
-              {/* SECCION DE LOS POSTS*/}
-              <ul className="listPost" style={{width: this.state.widthPost }}>
-                <li className="tittleListPC">Post</li>
-                  {this.state.post.map((val, i) => {
-                    if(val.post.length > this.state.wordsPost){
-                      return <li key={i}>
-                        {val.post.substring(0,this.state.wordsPost)}... 
-                        <ModalExample 
-                        post={val.post} 
-                        ind={i+1} 
-                        styleB="buttonShow"
-                        />
-                      </li>
-                    }else{
-                      return <li key={i}>
-                        {val.post}
-                      </li>
-                    }
-                  })}
-              </ul>
-              {/* SECCION DE LAS CATEGORIAS*/}
-              <ul className="listCategory">
-                <li className="tittleListPC">Category</li>
-                  {this.state.post.map((val, i) => { 
+          {/* SECCION DE LOS POSTS*/}
+          <ul className="listPost" style={{width: this.state.widthPost }}>
+            <li className="tittleListPC">Post</li>
+                    {this.state.post.map((val, i) => {
+                      if(val.post.length > 64){
+                        return <li key={i}>
+                          {val.post.substring(0,64)}... 
+                          <ModalExample 
+                          post={val.post} 
+                          ind={i+1} 
+                          styleB="buttonShow"
+                          />
+                        </li>
+                      }else{
+                        return <li key={i}>
+                          {val.post}
+                        </li>
+                      }
+                    })}
+            </ul>
+            {/* SECCION DE LAS CATEGORIAS*/}
+            <ul className="listCategory">
+              <li className="tittleListPC">Category</li>
+              {this.state.post.map((val, i) => { 
                     return <li key={i}>
                         <SelectCategory
                         id={i}
@@ -244,9 +174,70 @@ class PostAndCategory extends Component {
                     })}
               </ul>
               {/* SECCION DE LAS ESTADISTICAS */}
-              {staticsSection}
-        </div>
-      </div>
+              <ul className="listStatistics">
+                <li className="tittleListPC">Statistics of each Post</li>
+                  {this.state.post.map((val, indexPost) => {
+                  let ArrayValores = this.state.PostOfUser.map(val => parseInt(val[indexPost].category, 10));
+                  var Postvalores = [];
+                  for (let i = 0; i < ArrayValores.length; i++) {
+                    if(ArrayValores[i] > 0){
+                      Postvalores.push(ArrayValores[i])
+                    }
+                  }
+                  let TotalValores = Postvalores.length
+                  var percentage = {};
+                  for (let i = 0; i < TotalValores; i++) {
+                    percentage[Postvalores[i]] = percentage[Postvalores[i]] ? Number(percentage[Postvalores[i]]) + 1 : 1;
+                  }
+                  for (let key in percentage) {
+                    percentage[key] = Math.round(((percentage[key]/TotalValores)*100)*10) / 10;
+                  }
+                  // THIS IS THE RESULT
+                  if(Number(val.category) !== 0){
+                    if (Postvalores.length === 0) {
+                      return <li className="LIstatistics" key={indexPost}>
+                        <div className="noUserSelected">No one has selected in this Post</div>
+                      </li>
+                    }else {
+                      return <li className="LIstatistics" key={indexPost}>
+                      <div className="StyleStatistics">
+                        {
+                          Object.keys(percentage).map((key, index) => {
+                            if(percentage[key] >= 45){
+                              return <div key={index} className="DivStatistics"
+                              style={{width: percentage[key]+"%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
+                                <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
+                             </div> 
+                            }else if(percentage[key] >= 30){
+                              return <div key={index} className="DivStatistics"
+                              style={{width: percentage[key]+"%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
+                              <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
+                             </div> 
+                            }else if(percentage[key] >= 8){
+                              return <div key={index} className="DivStatistics"
+                              style={{width: percentage[key]+"%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
+                              <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
+                             </div> 
+                            }else{
+                              return <div key={index} className="DivStatistics"
+                              style={{width: percentage[key]+"%", backgroundColor:"rgba(0, 172, 230,"+(percentage[key]/100)+")"}}>
+                              <p>{this.state.category[key]}</p><p>{percentage[key]+"%"}</p>
+                             </div>
+                            }      
+                          })
+                        }  
+                      </div>
+                    </li> 
+                    }
+                  }else{
+                    return <li className="LIstatistics" key={indexPost}>
+                        <div className="noUserSelected">You must select a Category</div>
+                      </li>
+                  }
+                  })}
+                </ul>
+              </div>
+            </div>
     );
   }
 }

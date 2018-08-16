@@ -103,6 +103,7 @@
 
 /* POST SECTION */
 .listPost {
+  width: 600px;
   padding: 0;
   margin-bottom: 0;
 }

@@ -2,12 +2,12 @@ import firebase  from 'firebase/app';
 import 'firebase/database';
 
 const config = {
-    apiKey: "AIzaSyCqVjqpMNZ4k46WtiyFMx1G88yBNS-d-7M",
-    authDomain: "crow-codding.firebaseapp.com",
-    databaseURL: "https://crow-codding.firebaseio.com",
-    projectId: "crow-codding",
-    storageBucket: "crow-codding.appspot.com",
-    messagingSenderId: "1022422549646"
+    apiKey: "AIzaSyCBoAOj04MWr_0EKVvIdV3l7jSK1p_3buU",
+    authDomain: "crowd-coddingi3.firebaseapp.com",
+    databaseURL: "https://crowd-coddingi3.firebaseio.com",
+    projectId: "crowd-coddingi3",
+    storageBucket: "crowd-coddingi3.appspot.com",
+    messagingSenderId: "83095745342"
 };
 const app = firebase.initializeApp(config);
 const db = app.database()
@@ -20,11 +20,3 @@ var refAllUsers = db.ref("Users");
 var dbUser = db
 
 export { refGeneralCategory, refGeneralPosts, refAllUsers, dbUser}
-
-
-// apiKey: "AIzaSyAYStRsZqUp9u5d6uJE2qXEa1A_0QsilWk",
-// authDomain: "crowd-codding.firebaseapp.com",
-// databaseURL: "https://crowd-codding.firebaseio.com",
-// projectId: "crowd-codding",
-// storageBucket: "crowd-codding.appspot.com",
-// messagingSenderId: "852929625643"

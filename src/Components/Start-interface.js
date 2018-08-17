@@ -115,16 +115,20 @@ class LogIn extends Component{
         }else{
             this.setState({divErr: <div style={{color: "green"}}>Your Worker ID is correct*</div> })
             this.setState({ user: e.target.value });
-            this.setState({ numberPassowrd: this.state.listUsers.indexOf(e.target.value.toLowerCase())});
+            this.setState({ numberForPassowrd: this.state.listUsers.indexOf(e.target.value.toLowerCase())});
         }
       };
-    handleChangePassword(e) {
-        if(this.state.allUsers[this.state.numberPassowrd].User.UserInfo.Password !== e.target.value){
-            this.setState({divErr: <div style={{color: "red"}}>Your password is incorrect*</div> })
+      handleChangePassword(e) {
+        if(this.state.user === ""){
+            this.setState({divErr: <div style={{color: "red"}}>Write your Worker ID correctly*</div> })
         }else{
-            this.setState({divErr: <div style={{color: "green"}}>Your Password is correct*</div> })
-            this.setState({ password: e.target.value });
-            this.setState({url: "/postAndcategory/"+this.state.user})
+                if(this.state.allUsers[this.state.numberForPassowrd].User.UserInfo.Password !== e.target.value){
+                    this.setState({divErr: <div style={{color: "red"}}>Your password is incorrect*</div> })
+                }else{
+                    this.setState({divErr: <div style={{color: "green"}}>Your Password is correct*</div> })
+                    this.setState({ password: e.target.value });
+                    this.setState({url: "/postAndcategory/"+this.state.user})
+                }
         }
     };
 

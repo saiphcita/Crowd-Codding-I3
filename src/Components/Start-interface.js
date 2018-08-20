@@ -110,8 +110,10 @@ class LogIn extends Component{
     };
     
     handleChangeUser(e) {
+        this.setState({ user: e.target.value.toLowerCase() });
         if(!this.state.listUsers.includes(e.target.value.toLowerCase())){
             this.setState({divErr: <div style={{color: "red"}}>Your Worker ID doesn't exist*</div> })
+            this.setState({url: ""})
         }else{
             this.setState({divErr: <div style={{color: "green"}}>Your Worker ID is correct*</div> })
             this.setState({ user: e.target.value });
@@ -119,8 +121,9 @@ class LogIn extends Component{
         }
       };
       handleChangePassword(e) {
-        if(this.state.user === ""){
+        if(!this.state.listUsers.includes(this.state.user)){
             this.setState({divErr: <div style={{color: "red"}}>Write your Worker ID correctly*</div> })
+            this.setState({url: ""})
         }else{
                 if(this.state.allUsers[this.state.numberForPassowrd].User.UserInfo.Password !== e.target.value){
                     this.setState({divErr: <div style={{color: "red"}}>Your password is incorrect*</div> })

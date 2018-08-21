@@ -212,8 +212,7 @@ class SignUp extends Component{
             confirmPassword: "",
             replyErr: null,
             allUsers: this.props.allUsers,
-            listUsers: this.props.listUsers,
-            url:""
+            listUsers: this.props.listUsers
           };
 
           this.handleChangeUser = this.handleChangeUser.bind(this);
@@ -257,11 +256,15 @@ class SignUp extends Component{
     };
     
     handleChangeUser(e) {
-        if(this.state.listUsers.includes(e.target.value.toLowerCase())){
-            this.setState({replyErr: "This Worker ID already exists*"})
+        this.setState({ user: e.target.value.toLowerCase()});
+        if(e.target.value.length !== 0){
+            if(this.state.listUsers.includes(e.target.value.toLowerCase())){
+                this.setState({replyErr: "This Worker ID already exists*"})
+            }else{
+                this.setState({replyErr: <div style={{color: "green"}}>Your Worker ID is correct.</div>})
+            }
         }else{
-            this.setState({replyErr: <div style={{color: "green"}}>Your Worker ID is correct.</div>})
-            this.setState({ user: e.target.value.toLowerCase()});
+            this.setState({replyErr: "Write your new Worker ID"})
         }
       };
 
@@ -271,16 +274,37 @@ class SignUp extends Component{
     };
 
     handleChangeConfirmPassword(e) {
+        this.setState({ confirmPassword: e.target.value });
         if(this.state.password !== e.target.value){
             this.setState({replyErr: "Your password doesn't match*"})
         }else{
             this.setState({replyErr: <div style={{color: "green"}}>Your Password is correct.</div>})
             this.setState({ confirmPassword: e.target.value });
-            this.setState({url: "/postAndcategory/"+this.state.user.toLowerCase()})
         }
     };
 
-    render(){    
+    render(){
+
+        var divStatus = <div className="replyErr">{this.state.replyErr}</div>;
+        var url = "";
+        var workerId = this.state.user;
+        var passwordId = this.state.password;
+        var confirmPasswordId = this.state.confirmPassword;
+        if(workerId.length !== 0){
+            if(!this.state.listUsers.includes(workerId)){
+                if(passwordId.length !== 0 || confirmPasswordId.length !== 0){
+                    if (confirmPasswordId === passwordId){
+                        url = "/postAndcategory/"+workerId;
+                        divStatus = <div className="replyErr"><div style={{color: "green"}}>Your Worker Id and your Password are correct</div></div>
+                    }else{
+                        url = "";
+                    }
+                }
+            }else{
+                url = "";
+            };
+        };
+
         return (
             <div className="DivSignup">
                 <Form >
@@ -318,10 +342,10 @@ class SignUp extends Component{
                     </FormGroup> 
 
                 </Form>
-                <Link to={this.state.url}>
+                <Link to={url}>
                 <Button style={{float: "right"}} color="success" onClick={this.handleClick}>Submit</Button>
                 </Link>
-                <div className="replyErr">{this.state.replyErr}</div>
+                {divStatus}
             </div> 
         );
     };

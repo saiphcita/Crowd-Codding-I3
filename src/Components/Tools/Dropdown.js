@@ -53,7 +53,7 @@ export default class Dropdown extends React.Component {
   render() {
     var buttonStyle = {
         position: "inherit",
-        backgroundColor: "#fff",
+        backgroundColor: "#3DDFEA",
         color: "black",
         height: "100%",
         width: "100%",

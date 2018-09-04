@@ -121,9 +121,7 @@ class PostAndCategory extends Component {
                         refUserCategorySelected.set(event.target.value)
                         this.setState({finishJobM: 0});
                         this.setState({fJob: false});
-                        let user = this.state.userFs
-                        user.UserState = "working"
-                        refUserSate.set(user)
+                        refUserSate.set("working")
                       }}
                   />}                 
                 </li>

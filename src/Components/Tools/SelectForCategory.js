@@ -5,7 +5,7 @@ class SelectForCategory extends Component {
     return (
         <select id={this.props.id} value={this.props.categoryValue} onChange={this.props.handleChange}>
           {this.props.listCategory.map((val, i) => {
-            return <option key={i} value={i}>
+            return <option key={i} value={val}>
               {val}
             </option>
           })}

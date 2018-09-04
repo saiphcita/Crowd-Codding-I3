@@ -21,6 +21,33 @@ var dbUser = db
 
 export { refGeneralCategory, refGeneralPosts, refAllUsers, dbUser}
 
+// refAllUsers.on("value", (snapshot) => {
+//     let users = snapshot.val();
+//     var objectA = {}
+//     var array = ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6", "Category 7", "Category 8", "Category 9", "Category 10", "Information Distribution"];
+//     for(let j=0; j < array.length; j++){
+//         objectA[array[j]] = 0
+//     }
+//     for(let i=0; i < users.length; i++){
+//         users[i].PostAndCategory.Category = objectA
+//     }
+//     var xx = users
+//     // refAllUsers.set(xx)
+// })
+
+// refAllUsers.on("value", (snapshot) => {
+//     let users = snapshot.val();
+//     var arrayUsers= []
+//     for(let i=0; i < users.length; i++){
+//         var obejct = {}
+//         obejct.PostAndCategory= users[i].User.PostAndCategory;
+//         obejct.UserInfo= users[i].User.UserInfo;
+//         obejct.UserState= "working";
+//         arrayUsers.push(obejct)
+//     }
+//     // refAllUsers.set(arrayUsers)
+// })
+
 //extrallendo la informacion para Norma.
 // var refJsonNorma = db.ref("JsonNorma");
 // refAllUsers.on("value", (snapshot) => {

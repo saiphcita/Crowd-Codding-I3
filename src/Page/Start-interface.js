@@ -20,20 +20,23 @@ class StartInterface  extends Component {
     componentDidMount(){
         refAllUsers.on("value", (snapshot) => {
             let AllUsers = snapshot.val();
-            let listOfUsers = AllUsers.map(val => {return val.User.UserInfo.Username})
+            let listOfUsers = AllUsers.map(val => {return val.UserInfo.Username})
             this.setState({allUsers : AllUsers})
             this.setState({listUsers: listOfUsers})
         });
         refGeneralPosts.on("value", (snapshot) => {
             let posts = snapshot.val();
-            posts = posts.map(i => { return {"category": 0, "post": i }})
+            posts = posts.map(i => { return {"category": "Select Category", "post": i }})
             this.setState({posts : posts})
         });
         refGeneralCategory.on("value", (snapshot) => {
             let categorys = snapshot.val();
             categorys = categorys.map(i => i.categoryName)
-            categorys.unshift("Select Category")
-            this.setState({categorys : categorys})
+            var objectCategorys = {}
+            for(let i=0; i < categorys.length; i++){
+                objectCategorys[categorys[i]] = 0
+            }
+            this.setState({categorys : objectCategorys})
         });
         setTimeout(()=> {
             this.setState({pageTimeLoad: true})

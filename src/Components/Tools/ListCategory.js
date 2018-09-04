@@ -21,8 +21,8 @@ class ListCategory extends React.Component {
     return (
         <div className="DivDefinition2">
           <div className="titleList2">
-            <li style={{width:"15%", maxWidth:"15%"}}>Categoría</li>
-            <li style={{width:"85%", maxWidth:"85%"}}>Descripción</li>
+            <li style={{width:"15%", maxWidth:"15%"}}>Category</li>
+            <li style={{width:"85%", maxWidth:"85%"}}>Description</li>
           </div>
           {this.state.category.map((val, ind) =>{
             return (

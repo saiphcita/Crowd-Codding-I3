@@ -63,19 +63,19 @@ export default class Dropdown extends React.Component {
         margin: "0"
     };
     var dropDownS = {
-        backgroundColor: "#E4FFF7",
-        color:"black",
-        height: "auto",
-        width: "320px",
-        border: "2px solid black",
-        borderRadius: "4px"
+      backgroundColor: "#E4FFF7",
+      color:"black",
+      height: "auto",
+      width: "340px",
+      border: "2px solid black",
+      borderRadius: "4px"
     };
     var numeroEstadistico = {
-        float:"left", 
+        float:"right", 
         color:"black", 
         backgroundColor:"#95FC5A", 
         borderRadius:"3px", 
-        width:"40px", 
+        width:"45px", 
         textAlign:"center"
     };
 
@@ -92,7 +92,7 @@ export default class Dropdown extends React.Component {
               this.state.arrayCategories.map((val, ind) => {
                 return(
                   <DropdownItem disabled key={ind}>
-                      <div style={{float:"left", marginRight:"16px"}}>{val}</div> 
+                      <div style={{float:"left"}}>{val}</div> 
                       <div style={numeroEstadistico}>{this.state.categoriasPopularty[val]} <Icon size={12} icon={arrowUp}/></div>
                   </DropdownItem>
                 )

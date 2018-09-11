@@ -83,7 +83,7 @@ export default class Dropdown extends React.Component {
       <div style={{height:"100%", width:"100%"}}>
          <ButtonDropdown direction="left" isOpen={this.state.dropdownOpen} toggle={this.toggle} style={{position:"inherit", height:"100%", width:"100%"}}>
           <DropdownToggle caret style={buttonStyle}>
-            Popularity of post {(this.props.numberP+1)}
+            Popularity of Post {(this.props.numberP+1)}
           </DropdownToggle>
           <DropdownMenu style={dropDownS}>
             <DropdownItem style={{color:"black"}} header>{"Post "+(this.props.numberP+1)}</DropdownItem>

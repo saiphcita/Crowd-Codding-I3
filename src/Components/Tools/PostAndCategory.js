@@ -86,6 +86,7 @@ class PostAndCategory extends Component {
           {this.state.post.map((val, ind) =>{
             //esto es Select Category y Estadistica
             const refUserCategorySelected = dbUser.ref("Users/"+this.props.numberUser+"/PostAndCategory/Post/"+ind+"/category/")
+            const refUserCategoryTime = dbUser.ref("Users/"+this.props.numberUser+"/PostAndCategory/Post/"+ind+"/time/")
             const refUserSate= dbUser.ref("Users/"+this.props.numberUser+"/UserState")
 
             var popularity = <div/>
@@ -105,6 +106,7 @@ class PostAndCategory extends Component {
                         refUserCategorySelected.set(event.target.value)
                         this.setState({messageFinish: <div/>});
                         this.setState({heightPC: "88%"});
+                        refUserCategoryTime.set(this.props.timing)
                         refUserSate.set("working")
                       }}
                   />}                 

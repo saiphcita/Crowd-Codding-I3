@@ -87,7 +87,10 @@ class PostAndCategory extends Component {
             //esto es Select Category y Estadistica
             const refUserCategorySelected = dbUser.ref("Users/"+this.props.numberUser+"/PostAndCategory/Post/"+ind+"/category/")
             const refUserCategoryTime = dbUser.ref("Users/"+this.props.numberUser+"/PostAndCategory/Post/"+ind+"/time/")
+            const refUserCategoryHistory = dbUser.ref("Users/"+this.props.numberUser+"/PostAndCategory/Post/"+ind+"/history/")
             const refUserSate= dbUser.ref("Users/"+this.props.numberUser+"/UserState")
+
+            var newHistory = val.history
 
             var popularity = <div/>
             if(this.state.post[ind].category !== "Select Category"){
@@ -103,11 +106,18 @@ class PostAndCategory extends Component {
                 <li style={{width:"18%", maxWidth:"18%", padding:"0", margin:"0"}}>
                   {<SelectForCategory id={ind} listCategory={todasLasCategorias} categoryValue={this.state.post[ind].category}
                       handleChange={(event) =>{
-                        refUserCategorySelected.set(event.target.value)
+                        event.preventDefault()
                         this.setState({messageFinish: <div/>});
                         this.setState({heightPC: "88%"});
+                        //CAMBIO DE CATEGORIA
+                        refUserCategorySelected.set(event.target.value)
+                        //CAMBIO DE TIEMPO
                         refUserCategoryTime.set(this.props.timing)
+                        //CAMBIAR EL ESTADO A WORKING
                         refUserSate.set("working")
+                        //AGREGAR EL CAMBIO AL HISTORIAL
+                        newHistory.push([event.target.value, this.props.timing])
+                        refUserCategoryHistory.set(newHistory)
                       }}
                   />}                 
                 </li>

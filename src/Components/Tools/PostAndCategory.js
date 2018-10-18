@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../CSS/PostAndCategory.css';
 import SelectForCategory  from './SelectForCategory.js'
 import Dropdown  from './Dropdown.js'
-import { dbUser, refAllUsers } from './DataBase.js'
+import { dbUser } from './DataBase.js'
 
 class PostAndCategory extends Component {
   constructor(props) {
@@ -27,12 +27,6 @@ class PostAndCategory extends Component {
     refUserCategory.on("value", (snapshot) => {
       let category = snapshot.val();
       this.setState({category : category})
-    });
-
-    refAllUsers.on("value", (snapshot) => {
-      let AllUsers = snapshot.val();
-      let PostOfUser = AllUsers.map( val => val.PostAndCategory.Post)
-      this.setState({PostOfUser: PostOfUser})
     });
 
     const refUserFinish = dbUser.ref("Users/"+this.props.numberUser);
@@ -70,6 +64,11 @@ class PostAndCategory extends Component {
   };
 
   render() {
+
+    var todasLasCategorias = this.state.category
+    todasLasCategorias = Object.keys(todasLasCategorias).map((val)=>{return val})
+    todasLasCategorias.unshift("Select Category")
+
     var theFunction = this.finishWork.bind(this);
     if(this.state.finishJob){
       theFunction = this.props.change
@@ -86,14 +85,12 @@ class PostAndCategory extends Component {
           </div>
           {this.state.post.map((val, ind) =>{
             //esto es Select Category y Estadistica
-            var todasLasCategorias = this.state.category
-            todasLasCategorias = Object.keys(todasLasCategorias).map((val)=>{return val})
-            todasLasCategorias.unshift("Select Category")
             const refUserCategorySelected = dbUser.ref("Users/"+this.props.numberUser+"/PostAndCategory/Post/"+ind+"/category/")
             const refUserSate= dbUser.ref("Users/"+this.props.numberUser+"/UserState")
+
             var popularity = <div/>
             if(this.state.post[ind].category !== "Select Category"){
-              popularity = <Dropdown categorias={todasLasCategorias} numberP={ind} actual={this.state.post[ind].category}/>
+              popularity = <Dropdown numberPost={ind}  numberUser={this.props.numberUser}/>
             }else{
               popularity = "You must select a Category"
             }
